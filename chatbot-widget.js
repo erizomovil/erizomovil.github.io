@@ -52,7 +52,7 @@
             input.value = "";  // Limpiar el campo de entrada
 
             // Enviar el mensaje al chatbot (ajustar la URL a tu API de Vercel)
-            let response = await fetch("https://chatbot-5b9z0kt6m-erizomovils-projects.vercel.app/api/chatbot", {
+            let response = await fetch("https://chatbot-i69n7vwsk-erizomovils-projects.vercel.app/api/chatbot", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ message: msg })
