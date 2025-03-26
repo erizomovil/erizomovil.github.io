@@ -2,7 +2,7 @@
     // Crear el contenedor del chat
     let chatbox = document.createElement("div");
     chatbox.innerHTML = `
-        <div id="chat-container" style="position:fixed;bottom:20px;right:20px;width:300px;height:400px;background:white;border-radius:10px;box-shadow:0px 0px 10px gray;display:flex;flex-direction:column;display:none;">
+        <div id="chat-container" style="position:fixed;bottom:20px;right:20px;width:300px;height:400px;background:white;border-radius:10px;box-shadow:0px 0px 10px gray;display:none;">
             <div id="chat-messages" style="flex:1;overflow:auto;padding:10px;"></div>
             <input id="chat-input" type="text" placeholder="Escribe un mensaje..." style="border:none;padding:10px;width:calc(100% - 20px);">
         </div>
@@ -25,7 +25,12 @@
 
     // Mostrar/ocultar el chat al hacer clic en el botón
     button.onclick = function() {
-        chatbox.style.display = chatbox.style.display === "none" ? "block" : "none";
+        let chatContainer = document.getElementById("chat-container");
+        if (chatContainer.style.display === "none" || chatContainer.style.display === "") {
+            chatContainer.style.display = "block";
+        } else {
+            chatContainer.style.display = "none";
+        }
     };
 
     // Agregar el botón flotante al DOM
@@ -43,7 +48,7 @@
             input.value = "";
 
             // Enviar el mensaje al chatbot (ajustar la URL a tu API)
-            let response = await fetch("https://chatbot-5b9z0kt6m-erizomovils-projects.vercel.app", {
+            let response = await fetch("https://chatbot-5b9z0kt6m-erizomovils-projects.vercel.app/api/chatbo", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ message: msg })
