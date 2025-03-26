@@ -43,7 +43,7 @@
             input.value = "";
 
             // Enviar el mensaje al chatbot (ajustar la URL a tu API)
-            let response = await fetch("https://tu-api-chatbot.com/chatbot", {
+            let response = await fetch("https://chatbot-fvurss54c-erizomovils-projects.vercel.app", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ message: msg })
