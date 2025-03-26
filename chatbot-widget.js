@@ -2,9 +2,9 @@
     // Crear el contenedor del chat
     let chatbox = document.createElement("div");
     chatbox.innerHTML = `
-        <div id="chat-container" style="position:fixed;bottom:20px;right:20px;width:300px;height:400px;background:white;border-radius:10px;box-shadow:0px 0px 10px gray;display:none;">
-            <div id="chat-messages" style="flex:1;overflow:auto;padding:10px;"></div>
-            <input id="chat-input" type="text" placeholder="Escribe un mensaje..." style="border:none;padding:10px;width:calc(100% - 20px);">
+        <div id="chat-container" style="position:fixed;bottom:20px;right:20px;width:300px;height:400px;background:white;border-radius:10px;box-shadow:0px 0px 10px gray;display:none;flex;flex-direction:column;">
+            <div id="chat-messages" style="flex:1;overflow:auto;padding:10px;border-bottom:1px solid #ccc;"></div>
+            <input id="chat-input" type="text" placeholder="Escribe un mensaje..." style="border:none;padding:10px;width:calc(100% - 20px);box-sizing:border-box;">
         </div>
     `;
     document.body.appendChild(chatbox);
@@ -26,8 +26,9 @@
     // Mostrar/ocultar el chat al hacer clic en el botón
     button.onclick = function() {
         let chatContainer = document.getElementById("chat-container");
+        // Cambiar visibilidad del chat al hacer clic
         if (chatContainer.style.display === "none" || chatContainer.style.display === "") {
-            chatContainer.style.display = "block";
+            chatContainer.style.display = "flex";  // Usar 'flex' para una disposición adecuada
         } else {
             chatContainer.style.display = "none";
         }
@@ -44,18 +45,25 @@
     input.addEventListener("keypress", async function(event) {
         if (event.key === "Enter") {
             let msg = input.value;
-            messages.innerHTML += `<div><b>Tú:</b> ${msg}</div>`;
-            input.value = "";
+            if (!msg.trim()) return;  // Evitar mensajes vacíos
 
-            // Enviar el mensaje al chatbot (ajustar la URL a tu API)
-            let response = await fetch("https://chatbot-5b9z0kt6m-erizomovils-projects.vercel.app/api/chatbo", {
+            // Mostrar el mensaje del usuario en el chat
+            messages.innerHTML += `<div><b>Tú:</b> ${msg}</div>`;
+            input.value = "";  // Limpiar el campo de entrada
+
+            // Enviar el mensaje al chatbot (ajustar la URL a tu API de Vercel)
+            let response = await fetch("https://chatbot-5b9z0kt6m-erizomovils-projects.vercel.app/api/chatbot", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ message: msg })
             });
 
             let data = await response.json();
+
+            // Mostrar la respuesta del bot en el chat
             messages.innerHTML += `<div><b>Bot:</b> ${data.response}</div>`;
+            // Asegurarse de que el chat se desplace hacia abajo cuando se agreguen nuevos mensajes
+            messages.scrollTop = messages.scrollHeight;
         }
     });
 })();
